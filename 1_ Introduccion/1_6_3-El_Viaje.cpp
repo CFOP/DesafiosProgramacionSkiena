@@ -16,7 +16,7 @@ int n;
 int main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-    cout<< setprecision(2)<<fixed;
+    //cout<< setprecision(2)<<fixed;
     for(cin>>n; n; cin>>n){
         total = 0;
         dar = 0;
@@ -48,14 +48,7 @@ int main(){
         }
         if(mayor<menor)dar=mayor;
         else dar=menor;
-        /*if(dar%100){
-            double a = dar%100;
-            dar-= dar%100;
 
-            if(a/100>=0.5)
-                dar+=100;
-        }*/
-        cout<<dar<<"\n";
         cout<<"$"<<(double)dar/100<<"\n";
     }
 
