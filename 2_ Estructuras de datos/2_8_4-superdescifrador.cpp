@@ -2,45 +2,96 @@
 
 #define MAX 1005
 
-using namespace std;
+//#define PRUEVA 1
 
-int n;
+//using namespace std;
+using std::string;
+using std::vector;
+using std::unordered_map;
+using std::cin;
+#ifndef PRUEVA
+using std::cout;
+#endif // PRUEVA
+
 vector <string> dic[MAX];
 vector <string> cif;
+unordered_map <string, string> hmap;
 
-int c[30];
+char c[200];
+bool ocupado[200];
 
-bool probar(string posible, string desifrar){
-    for(int i=0; i<posible.size(); i++){
-        if(c[desifrar[i]-'a']){//ya esta asignada la letra
-            if(c[desifrar[i]-'a'])
+bool probar(int n){
+    if(n==0)
+        return true;
+    for(int i=0; i<200; i++)
+        ocupado[i]=c[i]=0;
+    for(int i=0; i<n; i++){
+        //cout<<cif[i]<<" "<<hmap[cif[i]]<<"\n";
+        for(int j=0; j<cif[i].size(); j++){
+            if(c[cif[i][j]]){
+                if(hmap[cif[i]][j] != c[cif[i][j]]){
+                    //cout<<cif[i][j]<<" "<<hmap[cif[i]][j]<<" "<<c[cif[i][j]]<<"\n\n\n";
+                    return false;
+                }
+            }
+            else{
+                if(ocupado[hmap[cif[i]][j]]) return false;
+                ocupado[hmap[cif[i]][j]]=true;
+                c[cif[i][j]] = hmap[cif[i]][j];
+            }
         }
     }
+    //cout<<"\n\n";
+    return true;
 }
 
 bool buscar(int i=0){
+    if(i==cif.size())
+        return probar(i);
+    //cout<<i;
+    if(!probar(i))
+        return false;
     string desifrar = cif[i];
-
+    if(hmap.find(desifrar)!=hmap.end())
+        return buscar(i+1);
+    //cout<<". ";
     for(string posible : dic[desifrar.size()]){
-        if(probar(posible, desifrar))
+            hmap[desifrar] = posible;
             if(buscar(i+1))
                 return true;
+            hmap.erase(desifrar);
     }
 
     return false;
 }
 
 int main(){
-    cin>>n;
+    #ifdef PRUEVA
+    std::ofstream cout;
+    cout.open("ans.txt");
+    #endif // PRUEVA
+    #ifndef PRUEVA
+    std::ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    #endif
+    int n; cin>>n;
+    string a;
+    getline(cin, a);
     for(int i=0; i<n; i++){
-        string a; cin>>a;
+        getline(cin, a);
         dic[a.size()].push_back(a);
     }
-
     while(!cin.eof()){
-        string a; getline(cin, a);
+        getline(cin, a);
+        #ifdef PRUEVA
+        if(a=="kk"){
+            cout.close();
+            return 0;
+        }
+        #endif // PRUEVA
         string ward = a;
         cif.clear();
+        hmap.clear();
         while(a.size()){
             if(a[0]==' '){
                 a = a.substr(1, a.size());
@@ -52,11 +103,17 @@ int main(){
             a = a.substr(p);
         }
 
-        memset(c, 0, sizeof(c));
-        if(!buscar())
+        //memset(c, 0, sizeof(c));
+        if(!buscar()){
             for(char i : ward)
                 if(i==' ')cout<<" ";
                 else cout<<'*';
+        }
+        else {
+            for(char i : ward)
+                if(i==' ')cout<<" ";
+                else cout<<c[i];
+        }
         cout<<"\n";
     }
 
@@ -73,4 +130,90 @@ spot
 yertle
 bjvg xsb hxsn xsb qymm xsb rqat xsb pnetfn
 xxxx yyy zzzz www yyyy aaa bbbb ccc dddddd
+
+29
+baseball
+football
+basketball
+tennis
+ball
+is
+a
+sport
+which
+uses
+not
+one
+two
+player
+players
+too
+i
+like
+also
+these
+are
+sports
+soccer
+no
+chess
+btw
+by
+the
+way
+lrsglrww as r sexvh
+dffbqtoo sk t kjfcb bff
+knnwqndd hg j gmnbw wnn
+u wuqe bdaebdww
+c pu iuo hcsw owiict
+xhwkw fiw kldixk xwzzak yddxmfjj mfkqwxmfjj mfkwmfjj
+micvc tbc vwfbmv mff mchhev pffmdtoo dtvacmdtoo dtvcdtoo jicvv
+mysrs bus rehumr mhh msggar ohhmjbxx jbrksmjbxx jbrsjbxx rkaagq
+miana pfa ndcfmn mcc mallbn sccmqpjj qpnoamqpjj qpnaqpjj nceeaf
+a ybhd baic hdttcu oks
+w rvez vwum ezkkmg dj psm trj
+b fkry kbew ryggwa qu liw tfurbvw
+
+
+29
+baseball
+football
+basketball
+tennis
+ball
+is
+a
+sport
+which
+uses
+not
+one
+two
+player
+players
+too
+i
+like
+also
+these
+are
+sports
+soccer
+no
+chess
+btw
+by
+the
+way
+u wuqe bdaebdww
+
+
+6
+baseball
+a
+k
+i
+like
+also
+u wuqe bdaebdww
 */
