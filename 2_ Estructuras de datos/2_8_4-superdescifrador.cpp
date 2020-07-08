@@ -2,14 +2,14 @@
 
 #define MAX 1005
 
-//#define PRUEVA 1
+//#define PRUEBA 1
 
 //using namespace std;
 using std::string;
 using std::vector;
 using std::unordered_map;
 using std::cin;
-#ifndef PRUEVA
+#ifndef PRUEBA
 using std::cout;
 #endif // PRUEVA
 
@@ -66,11 +66,11 @@ bool buscar(int i=0){
 }
 
 int main(){
-    #ifdef PRUEVA
+    #ifdef PRUEBA
     std::ofstream cout;
     cout.open("ans.txt");
-    #endif // PRUEVA
-    #ifndef PRUEVA
+    #endif // PRUEBA
+    #ifndef PRUEBA
     std::ios_base::sync_with_stdio(0);
     cin.tie(0);
     #endif
@@ -83,12 +83,12 @@ int main(){
     }
     while(!cin.eof()){
         getline(cin, a);
-        #ifdef PRUEVA
+        #ifdef PRUEBA
         if(a=="kk"){
             cout.close();
             return 0;
         }
-        #endif // PRUEVA
+        #endif // PRUEBA
         string ward = a;
         cif.clear();
         hmap.clear();
